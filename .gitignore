@@ -1,0 +1,128 @@
+# =========================================================
+#  Game-ProjectShift — .gitignore
+#  Cobre Unity e Godot (engine ainda não definida)
+# =========================================================
+
+# ---------------------------------------------------------
+# Unity
+# ---------------------------------------------------------
+# Pastas geradas pelo editor (com ou sem projeto em subpasta)
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+[Rr]ecordings/
+
+# Asset Store tools
+/[Aa]ssets/AssetStoreTools*
+
+# Plugins auto-gerados
+/[Aa]ssets/Plugins/Editor/JetBrains*
+
+# Visual Studio cache
+.vs/
+
+# Gradle cache (Android)
+.gradle/
+
+# Arquivos de solução/projeto gerados pelo Unity
+ExportedObj/
+.consulo/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Meta de arquivos ignorados
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+
+# Crash reports
+sysinfo.txt
+
+# Builds
+*.apk
+*.aab
+*.unitypackage
+*.app
+
+# Crashlytics
+crashlytics-build.properties
+
+# Addressables / Burst
+/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
+/[Aa]ssets/[Ss]treamingAssets/aa.meta
+/[Aa]ssets/[Ss]treamingAssets/aa/*
+*_BurstDebugInformation_DoNotShip/
+
+# ---------------------------------------------------------
+# Godot 4+
+# ---------------------------------------------------------
+.godot/
+.nomedia
+
+# Godot 3 (legado)
+.import/
+export.cfg
+export_credentials.cfg
+# Presets de export podem conter credenciais — descomente se necessário
+# export_presets.cfg
+
+# Mono / C# no Godot
+.mono/
+data_*/
+mono_crash.*.json
+
+# Builds exportadas
+*.pck
+*.exe
+*.x86_64
+*.wasm
+
+# ---------------------------------------------------------
+# IDEs / Editores
+# ---------------------------------------------------------
+.idea/
+*.swp
+*.swo
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+
+# Rider
+*.sln.iml
+
+# ---------------------------------------------------------
+# Sistema operacional
+# ---------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ---------------------------------------------------------
+# Outros
+# ---------------------------------------------------------
+*.log
+*.bak
+*.orig
+.env
