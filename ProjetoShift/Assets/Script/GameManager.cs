@@ -4,15 +4,15 @@ public class GameManager : MonoBehaviour
 {
     private struct LinesStruct
     {
-        public Transform Position;
-        public bool IsOccupied;
+        public GameObject RunnerObject;
+        public Transform LineTransform;
     }
     private LinesStruct[] Lines;
     [SerializeField]
     private GameObject[] Runners;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         int childCount = transform.childCount;
         if (childCount == 0 || Runners == null || Runners.Length == 0) return;
@@ -23,8 +23,8 @@ public class GameManager : MonoBehaviour
         {
             Lines[c] = new LinesStruct
             {
-                Position = transform.GetChild(c),
-                IsOccupied = false
+                RunnerObject = null,
+                LineTransform = transform.GetChild(c),
             };
         }
 
@@ -36,50 +36,72 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < runnerCount; i++)
         {
             int lineIndex = Mathf.Clamp(aux * i, 0, Lines.Length - 1);
-            Instantiate(Runners[i], Lines[lineIndex].Position.position, Quaternion.identity);
-            Lines[lineIndex].IsOccupied = true;
+            GameObject runner = Instantiate(Runners[i], Lines[lineIndex].LineTransform.position, Quaternion.identity);
+            Lines[lineIndex].RunnerObject = runner;
         }
 
     }
 
-    public void MoveRunner(GameObject runner, int newLineIndex)
+    public GameObject[] GetRunners()
     {
-        if (newLineIndex < 0 || newLineIndex >= Lines.Length)
-        {
-            Debug.LogWarning("Invalid line index.");
-            return;
-        }
-        // Encontra o índice da linha atual do runner
-        int currentLineIndex = -1;
+        GameObject[] tempRunner = new GameObject[Runners.Length];
+        int aux = 0;
         for (int i = 0; i < Lines.Length; i++)
         {
-            if (Lines[i].IsOccupied && Lines[i].Position == runner.transform.parent)
+            if (Lines[i].RunnerObject != null)
+            {
+                tempRunner[aux] = Lines[i].RunnerObject;
+                aux++;
+            }
+        }
+        return tempRunner;
+    }
+
+
+    public void MoveRunnerRight(GameObject runner)
+    {
+        int currentLineIndex = -1;
+        // checando onde o runner está atualmente
+        for (int i = 0; i < Lines.Length; i++)
+        {
+            if (Lines[i].RunnerObject == runner)
             {
                 currentLineIndex = i;
                 break;
             }
         }
-        if (currentLineIndex == -1)
+
+        // checando se o runner pode se mover para a direita
+        if (currentLineIndex < Lines.Length - 1 && Lines[currentLineIndex + 1].RunnerObject == null)
         {
-            Debug.LogWarning("Runner is not on any line.");
-            return;
+            // movendo o runner para a linha à direita
+            runner.transform.position = Lines[currentLineIndex + 1].LineTransform.position;
+            Lines[currentLineIndex + 1].RunnerObject = runner;
+            Lines[currentLineIndex].RunnerObject = null;
         }
-        // Checa se o índice da nova linha é visinho ao índice da linha atual
-        if (Mathf.Abs(newLineIndex - currentLineIndex) != 1)
-        {
-            Debug.LogWarning("The new line index is not adjacent to the current line index.");
-            return;
-        }
-        // Checa se a nova linha está ocupada
-        if (Lines[newLineIndex].IsOccupied)
-        {
-            Debug.LogWarning("The target line is already occupied.");
-            return;
-        }
-        // move the runner to the new line
-        runner.transform.position = Lines[newLineIndex].Position.position;
-        // Atualiza o estado de ocupação das linhas
-        Lines[currentLineIndex].IsOccupied = false;
-        Lines[newLineIndex].IsOccupied = true;
     }
+
+    public void MoveRunnerLeft(GameObject runner)
+    {
+        int currentLineIndex = -1;
+        // checando onde o runner está atualmente
+        for (int i = 0; i < Lines.Length; i++)
+        {
+            if (Lines[i].RunnerObject == runner)
+            {
+                currentLineIndex = i;
+                break;
+            }
+        }
+
+        // checando se o runner pode se mover para a esquerda
+        if (currentLineIndex > 0 && Lines[currentLineIndex - 1].RunnerObject == null)
+        {
+            // movendo o runner para a linha à esquerda
+            runner.transform.position = Lines[currentLineIndex - 1].LineTransform.position;
+            Lines[currentLineIndex - 1].RunnerObject = runner;
+            Lines[currentLineIndex].RunnerObject = null;
+        }
+    }
+
 }
