@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    // Estrutura para armazenar a referência do runner e a linha correspondente
     private struct LinesStruct
     {
         public GameObject RunnerObject;
@@ -9,9 +10,18 @@ public class GameManager : MonoBehaviour
     }
     private LinesStruct[] Lines;
     [SerializeField]
+    // Array de runners a serem instanciados
     private GameObject[] Runners;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    // Variaveis para armazenar os dados dos inimigos
+    [SerializeField]
+    private GameObject[] Enemies;
+    [SerializeField]
+    private float spawnInterval = 2f; // Intervalo de spawn em segundos
+
+    // Variável para controlar o tempo desde o último spawn
+    private float timeSinceLastSpawn = 0f;
+
     void Awake()
     {
         int childCount = transform.childCount;
@@ -42,6 +52,17 @@ public class GameManager : MonoBehaviour
 
     }
 
+    private void FixedUpdate()
+    {
+        timeSinceLastSpawn += Time.fixedDeltaTime;
+        if (timeSinceLastSpawn >= spawnInterval)
+        {
+            SpawnEnemy();
+            timeSinceLastSpawn = 0f;
+        }
+    }
+
+    // Método para obter os runners instanciados
     public GameObject[] GetRunners()
     {
         GameObject[] tempRunner = new GameObject[Runners.Length];
@@ -57,7 +78,7 @@ public class GameManager : MonoBehaviour
         return tempRunner;
     }
 
-
+    // Métodos para mover os runners
     public void MoveRunnerRight(GameObject runner)
     {
         int currentLineIndex = -1;
@@ -102,6 +123,18 @@ public class GameManager : MonoBehaviour
             Lines[currentLineIndex - 1].RunnerObject = runner;
             Lines[currentLineIndex].RunnerObject = null;
         }
+    }
+
+    private void SpawnEnemy()
+    {
+        if (Enemies.Length == 0) return;
+        // Escolhe um inimigo aleatório
+        GameObject enemyPrefab = Enemies[Random.Range(0, Enemies.Length)];
+        // Escolhe uma linha aleatória
+        int lineIndex = Random.Range(0, Lines.Length);
+        Vector3 spawnPoint = new Vector3 (Lines[lineIndex].LineTransform.position.x, Lines[lineIndex].LineTransform.position.y + 12f, 0f);
+        // Instancia o inimigo na posição da linha escolhida
+        Instantiate(enemyPrefab, spawnPoint, Quaternion.identity);
     }
 
 }

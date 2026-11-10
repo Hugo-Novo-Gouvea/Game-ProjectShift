@@ -3,9 +3,13 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    // Referencia para o GameManager
     GameManager gameManager;
+
+    // Variaveis para armazenar os dados dos runners
     GameObject[] Runners;
     int currentRunner = -1;
+
     void Awake()
     {
         gameManager = FindFirstObjectByType<GameManager>();
@@ -26,18 +30,17 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Keyboard.current.rightArrowKey.wasPressedThisFrame)
+        if (Keyboard.current.rightArrowKey.wasPressedThisFrame || Keyboard.current.dKey.wasPressedThisFrame)
         {
             gameManager.MoveRunnerRight(Runners[currentRunner]);
         }
         
-        if (Keyboard.current.leftArrowKey.wasPressedThisFrame)
+        if (Keyboard.current.leftArrowKey.wasPressedThisFrame || Keyboard.current.aKey.wasPressedThisFrame)
         {
             gameManager.MoveRunnerLeft(Runners[currentRunner]);
         }
         if (Keyboard.current.shiftKey.wasPressedThisFrame)
         {
-            Debug.Log("shiftKey key pressed");
 
             if (currentRunner < Runners.Length - 1)
             {
