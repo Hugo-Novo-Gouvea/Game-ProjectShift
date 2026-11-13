@@ -153,8 +153,10 @@ MonoBehaviour:
   - {fileID: 3675572533834837600, guid: 855f0fc7be8683644878718cdd8cf97b, type: 3}
   Enemies:
   - {fileID: 6925963971462937553, guid: 7b2f51a50c7db1448959836698530fbb, type: 3}
-  - {fileID: 7650171534614573306, guid: 5cd5594cdb7f6e74cbfa9a72a4bf533e, type: 3}
-  spawnInterval: 2
+  - {fileID: 6925963971462937553, guid: a43edfa6c0492ca4782cf7e2b0f81612, type: 3}
+  - {fileID: 6925963971462937553, guid: c294b2ba7596163489a80a73eb146279, type: 3}
+  - {fileID: 6925963971462937553, guid: 6b0abf2326e04d04f92ba02fe903316e, type: 3}
+  spawnInterval: 1.5
 --- !u!4 &182615330
 Transform:
   m_ObjectHideFlags: 0
@@ -604,7 +606,7 @@ Transform:
   m_GameObject: {fileID: 2089707721}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.42372, y: -0.01052, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6898743305706417285}
   - component: {fileID: 6180413013544612555}
   - component: {fileID: -4468045518286740849}
+  - component: {fileID: -7584743412835321994}
   m_Layer: 0
   m_Name: Triangle
   m_TagString: Player
@@ -102,7 +103,7 @@ Rigidbody2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3675572533834837600}
   m_BodyType: 2
-  m_Simulated: 0
+  m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
@@ -150,9 +151,21 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0.21133333}
   m_Radius: 0.5
+--- !u!114 &-7584743412835321994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3675572533834837600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ca77a286382c1e4f9e125757d3d0f80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Runner

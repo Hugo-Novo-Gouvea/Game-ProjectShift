@@ -3,6 +3,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     private Rigidbody2D rb;
+    private GameManager gameManager;
 
     [SerializeField]
     private float speed = 5f; // Velocidade do inimigo
@@ -10,11 +11,19 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        gameManager = FindFirstObjectByType<GameManager>();
     }
 
     void FixedUpdate()
     {
-        Movement();
+        if (!gameManager.IsGameOver)
+        {
+            Movement();
+        }
+        else
+        {
+            rb.linearVelocityY = 0f; // Para o movimento do inimigo quando o jogo termina
+        }
     }
 
     private void Movement()
@@ -24,11 +33,6 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-        {
-            // Aqui você pode adicionar a lógica para quando o inimigo colidir com o runner
-            Debug.Log("Inimigo colidiu com o Player!");
-        }
         if (collision.CompareTag("BottomBoundary"))
         {
             // Aqui você pode adicionar a lógica para quando o inimigo sair da tela

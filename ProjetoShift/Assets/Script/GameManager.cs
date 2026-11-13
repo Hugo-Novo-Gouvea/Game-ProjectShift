@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
     // Variável para controlar o tempo desde o último spawn
     private float timeSinceLastSpawn = 0f;
 
+    // Variável para controlar o estado do jogo
+    public bool IsGameOver { get; private set; }
+
     void Awake()
     {
         int childCount = transform.childCount;
@@ -51,15 +54,15 @@ public class GameManager : MonoBehaviour
         }
 
     }
+    private void Start()
+    {
+        InvokeRepeating(nameof(SpawnEnemy), 1f,spawnInterval);
+    }
 
     private void FixedUpdate()
     {
         timeSinceLastSpawn += Time.fixedDeltaTime;
-        if (timeSinceLastSpawn >= spawnInterval)
-        {
-            SpawnEnemy();
-            timeSinceLastSpawn = 0f;
-        }
+        
     }
 
     // Método para obter os runners instanciados
@@ -135,6 +138,14 @@ public class GameManager : MonoBehaviour
         Vector3 spawnPoint = new Vector3 (Lines[lineIndex].LineTransform.position.x, Lines[lineIndex].LineTransform.position.y + 12f, 0f);
         // Instancia o inimigo na posição da linha escolhida
         Instantiate(enemyPrefab, spawnPoint, Quaternion.identity);
+    }
+    public void TriggerGameOver()
+    {
+        if (IsGameOver) return;
+        IsGameOver = true;
+
+        // Interrompe imediatamente o agendamento do SpawnEnemy
+        CancelInvoke(nameof(SpawnEnemy));
     }
 
 }

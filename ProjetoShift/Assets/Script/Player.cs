@@ -30,26 +30,31 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Keyboard.current.rightArrowKey.wasPressedThisFrame || Keyboard.current.dKey.wasPressedThisFrame)
+        // Verifica se o jogo não acabou antes de permitir o movimento dos runners
+        if (!gameManager.IsGameOver)
         {
-            gameManager.MoveRunnerRight(Runners[currentRunner]);
-        }
-        
-        if (Keyboard.current.leftArrowKey.wasPressedThisFrame || Keyboard.current.aKey.wasPressedThisFrame)
-        {
-            gameManager.MoveRunnerLeft(Runners[currentRunner]);
-        }
-        if (Keyboard.current.shiftKey.wasPressedThisFrame)
-        {
-
-            if (currentRunner < Runners.Length - 1)
+            // Verifica se as teclas de seta ou WASD foram pressionadas
+            if (Keyboard.current.rightArrowKey.wasPressedThisFrame || Keyboard.current.dKey.wasPressedThisFrame)
             {
-                currentRunner++;
+                gameManager.MoveRunnerRight(Runners[currentRunner]);
             }
-            else
+
+            if (Keyboard.current.leftArrowKey.wasPressedThisFrame || Keyboard.current.aKey.wasPressedThisFrame)
             {
-                currentRunner = 0;
-            }   
+                gameManager.MoveRunnerLeft(Runners[currentRunner]);
+            }
+            if (Keyboard.current.shiftKey.wasPressedThisFrame)
+            {
+
+                if (currentRunner < Runners.Length - 1)
+                {
+                    currentRunner++;
+                }
+                else
+                {
+                    currentRunner = 0;
+                }
+            }
         }
     }
 }
