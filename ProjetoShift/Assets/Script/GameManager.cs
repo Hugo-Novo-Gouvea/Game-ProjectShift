@@ -25,10 +25,33 @@ public class GameManager : MonoBehaviour
     // Variável para controlar o estado do jogo
     public bool IsGameOver { get; private set; }
 
+    // Variavel para canvas de game over
+
+    [SerializeField]
+    private GameObject gameOverCanvas;
+
+    // Singleton instance
+    public static GameManager Instance { get; private set; }
+
+
     void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         int childCount = transform.childCount;
-        if (childCount == 0 || Runners == null || Runners.Length == 0) return;
+        if (childCount == 0 || Runners == null || Runners.Length == 0)
+        { 
+            Debug.LogWarning("Não há linhas ou runners definidos. Certifique-se de que o GameManager tenha filhos e que o array Runners esteja preenchido.");
+            return; 
+        }
 
         // 1. Preenche o array Lines com os Transforms dos filhos
         Lines = new LinesStruct[childCount];
@@ -57,6 +80,11 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         InvokeRepeating(nameof(SpawnEnemy), 1f,spawnInterval);
+
+        if (gameOverCanvas == null)
+        {
+            gameOverCanvas = GameObject.Find("GameOverCanvas");
+        }
     }
 
     private void FixedUpdate()
@@ -146,6 +174,13 @@ public class GameManager : MonoBehaviour
 
         // Interrompe imediatamente o agendamento do SpawnEnemy
         CancelInvoke(nameof(SpawnEnemy));
+
+        // Ativa o canvas de Game Over
+        if (gameOverCanvas != null)
+        {
+            Debug.Log("Game Over! Ativando o canvas de Game Over.");
+            gameOverCanvas.SetActive(true);
+        }
     }
 
 }
