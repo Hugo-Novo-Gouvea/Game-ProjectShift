@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,9 +20,16 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float spawnInterval = 2f; // Intervalo de spawn em segundos
 
-    // Variável para controlar o tempo desde o último spawn
-    private float timeSinceLastSpawn = 0f;
+    // Variável para controlar o tempo
+    private float timeMaster = 0f;
 
+    // Variavel para pontuação
+    private float score = 0;
+    
+    [SerializeField]
+    private TMP_Text hudScoreText;
+    [SerializeField]
+    private TMP_Text endScore;
     // Variável para controlar o estado do jogo
     public bool IsGameOver { get; private set; }
 
@@ -89,8 +97,13 @@ public class GameManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        timeSinceLastSpawn += Time.fixedDeltaTime;
-        
+        timeMaster += Time.fixedDeltaTime;
+
+        if (!IsGameOver)
+        {
+            score += 10 * Time.fixedDeltaTime;
+            hudScoreText.SetText("Score: {0:0}", score);
+        }
     }
 
     // Método para obter os runners instanciados
@@ -180,6 +193,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Game Over! Ativando o canvas de Game Over.");
             gameOverCanvas.SetActive(true);
+            endScore.SetText("Score: {0:0}", score);
         }
     }
 
