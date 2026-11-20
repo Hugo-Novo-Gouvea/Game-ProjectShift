@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using TMPro;
 
 public class GameManager : MonoBehaviour
@@ -19,13 +20,16 @@ public class GameManager : MonoBehaviour
     private GameObject[] Enemies;
     [SerializeField]
     private float spawnInterval = 2f; // Intervalo de spawn em segundos
+    [SerializeField]
+    private int maxEnemiesOnScreenOnStart; // Número máximo de inimigos na tela no inicio do jogo
+    private int currentEnemiesOnScreen = 0; // Contador de inimigos na tela
 
     // Variável para controlar o tempo
     private float timeMaster = 0f;
 
     // Variavel para pontuação
-    private float score = 0;
-    
+    public float Score { get; private set; } = 0;
+
     [SerializeField]
     private TMP_Text hudScoreText;
     [SerializeField]
@@ -84,10 +88,12 @@ public class GameManager : MonoBehaviour
             Lines[lineIndex].RunnerObject = runner;
         }
 
+        currentEnemiesOnScreen = maxEnemiesOnScreenOnStart;
+
     }
     private void Start()
     {
-        InvokeRepeating(nameof(SpawnEnemy), 1f,spawnInterval);
+        StartCoroutine(RoutineSpawn());
 
         if (gameOverCanvas == null)
         {
@@ -101,9 +107,21 @@ public class GameManager : MonoBehaviour
 
         if (!IsGameOver)
         {
-            score += 10 * Time.fixedDeltaTime;
-            hudScoreText.SetText("Score: {0:0}", score);
+            Score += 10 * Time.fixedDeltaTime;
+            hudScoreText.SetText("Score: {0:0}", Score);
         }
+
+        if (Score >= 1000)
+        {
+            spawnInterval = 1f; // Reduz o intervalo de spawn para 1 segundo
+            currentEnemiesOnScreen = maxEnemiesOnScreenOnStart + 2; // Aumenta o número de inimigos na tela
+        }
+        else if (Score >= 300)
+        {
+            currentEnemiesOnScreen = maxEnemiesOnScreenOnStart + 1; // Aumenta o número de inimigos na tela
+        }
+
+        spawnInterval -= 0.0833f * Time.fixedDeltaTime; // Reduz o intervalo de spawn em 0.083 segundos a cada segundo
     }
 
     // Método para obter os runners instanciados
@@ -169,6 +187,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private IEnumerator RoutineSpawn()
+    {
+        while (!IsGameOver)
+        {
+            SpawnEnemy();
+            yield return new WaitForSeconds(spawnInterval);
+        }
+
+    }
+
     private void SpawnEnemy()
     {
         if (Enemies.Length == 0) return;
@@ -178,7 +206,10 @@ public class GameManager : MonoBehaviour
         int lineIndex = Random.Range(0, Lines.Length);
         Vector3 spawnPoint = new Vector3 (Lines[lineIndex].LineTransform.position.x, Lines[lineIndex].LineTransform.position.y + 12f, 0f);
         // Instancia o inimigo na posição da linha escolhida
-        Instantiate(enemyPrefab, spawnPoint, Quaternion.identity);
+        if (FindObjectsByType<Enemy>(FindObjectsSortMode.None).Length < currentEnemiesOnScreen)
+        {
+            Instantiate(enemyPrefab, spawnPoint, Quaternion.identity);
+        }
     }
     public void TriggerGameOver()
     {
@@ -186,14 +217,14 @@ public class GameManager : MonoBehaviour
         IsGameOver = true;
 
         // Interrompe imediatamente o agendamento do SpawnEnemy
-        CancelInvoke(nameof(SpawnEnemy));
+        StopCoroutine(RoutineSpawn());
 
         // Ativa o canvas de Game Over
         if (gameOverCanvas != null)
         {
             Debug.Log("Game Over! Ativando o canvas de Game Over.");
             gameOverCanvas.SetActive(true);
-            endScore.SetText("Score: {0:0}", score);
+            endScore.SetText("Score: {0:0}", Score);
         }
     }
 
