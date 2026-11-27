@@ -3,10 +3,13 @@ using UnityEngine;
 public class Runner : MonoBehaviour
 {
     private GameManager gameManager;
+    public Animator animator; // Referência para o Animator do Runner
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         gameManager = FindFirstObjectByType<GameManager>();
+        animator = GetComponent<Animator>();
+
     }
 
     // Update is called once per frame

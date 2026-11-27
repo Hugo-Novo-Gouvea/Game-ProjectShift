@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6180413013544612555}
   - component: {fileID: -4468045518286740849}
   - component: {fileID: -7584743412835321994}
+  - component: {fileID: -2814644649393158309}
   m_Layer: 0
   m_Name: Triangle
   m_TagString: Player
@@ -84,7 +85,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
+  m_Sprite: {fileID: -6318667877710143623, guid: 2ff1671f13a982c4983b18247a32a0e4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -155,7 +156,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.21133333}
+  m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
 --- !u!114 &-7584743412835321994
 MonoBehaviour:
@@ -169,3 +170,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ca77a286382c1e4f9e125757d3d0f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Runner
+  animator: {fileID: 0}
+--- !u!95 &-2814644649393158309
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3675572533834837600}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 91995a5c0ca7dc347bc866fa386a5fad, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

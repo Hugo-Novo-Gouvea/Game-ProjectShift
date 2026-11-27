@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
         {
             currentRunner = 0;
         }
+        Runners[currentRunner].GetComponent<Animator>().SetTrigger("Active");
     }
 
     // Update is called once per frame
@@ -45,6 +46,7 @@ public class Player : MonoBehaviour
             }
             if (Keyboard.current.shiftKey.wasPressedThisFrame)
             {
+                Runners[currentRunner].GetComponent<Animator>().ResetTrigger("Active");
 
                 if (currentRunner < Runners.Length - 1)
                 {
@@ -54,6 +56,7 @@ public class Player : MonoBehaviour
                 {
                     currentRunner = 0;
                 }
+                Runners[currentRunner].GetComponent<Animator>().SetTrigger("Active");
             }
         }
     }
