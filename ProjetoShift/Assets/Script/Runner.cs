@@ -9,7 +9,6 @@ public class Runner : MonoBehaviour
     {
         gameManager = FindFirstObjectByType<GameManager>();
         animator = GetComponent<Animator>();
-
     }
 
     // Update is called once per frame

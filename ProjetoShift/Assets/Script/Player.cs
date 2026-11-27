@@ -6,6 +6,11 @@ public class Player : MonoBehaviour
     // Referencia para o GameManager
     GameManager gameManager;
 
+    [SerializeField]
+    private AudioSource audioSouce;
+    [SerializeField]
+    private AudioClip switchRunnerClip;
+
     // Variaveis para armazenar os dados dos runners
     GameObject[] Runners;
     int currentRunner = -1;
@@ -57,6 +62,7 @@ public class Player : MonoBehaviour
                     currentRunner = 0;
                 }
                 Runners[currentRunner].GetComponent<Animator>().SetTrigger("Active");
+                audioSouce.PlayOneShot(switchRunnerClip);
             }
         }
     }

@@ -192,3 +192,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ca77a286382c1e4f9e125757d3d0f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Runner
+  animator: {fileID: 0}
