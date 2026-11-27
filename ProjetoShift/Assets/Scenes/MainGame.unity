@@ -2766,7 +2766,7 @@ Transform:
   m_GameObject: {fileID: 689174979}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.20801, y: 0.06168, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3759,6 +3759,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dde67f714373bf549813935754d6d99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+  audioSouce: {fileID: 689174980}
+  switchRunnerClip: {fileID: 8300000, guid: 53d5cf20431dc8a4f940327cdbeeb962, type: 3}
 --- !u!4 &2089707723
 Transform:
   m_ObjectHideFlags: 0
